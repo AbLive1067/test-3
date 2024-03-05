@@ -1,0 +1,14 @@
+app:
+  env:
+    - name: BOOTSTRAP_SERVERS
+      value: vault:/old/path/filename:BOOTSTRAP_SERVERS_DEV
+    
+    - name: NEW_USER
+      value: vault:/old/path/path/filename:NEW_USER_RIME
+    
+    - name: ALPIENDF
+      value: "aloha"
+    
+    - name: PORT
+      value: 8080
+

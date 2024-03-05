@@ -1,7 +1,7 @@
 app:
   env:
-    - name: BOOTSTRAP_SERVERS
-      value: vault:/old/path/filename:BOOTSTRAP_SERVERS_DEV
+    - name: dbs
+      value: vault:/old/path/filename:dbs
     
     - name: NEW_USER
       value: vault:/old/path/path/filename:NEW_USER_RIME

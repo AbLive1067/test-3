@@ -6,7 +6,7 @@ app:
     - name: NEW_USER
       value: vault:/old/path/path/filename:NEW_USER_RIME
     
-    - name: ALPIENDF
+    - name: APP-NAME
       value: "aloha"
     
     - name: PORT

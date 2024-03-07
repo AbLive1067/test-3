@@ -13,6 +13,23 @@ pipeline{
         AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
         
     }
+    stage('passwords'){
+            steps{
+                withVault([
+                    configuration: [vaultCredentialId: 'vaultsecret-test'],
+                    vaultsecrets;
+                    [
+                        [path: 'secre/creds/aws',
+                        secretValues:
+                        [
+                            [envVar: "VAERY_BIG_SECRET", vaultKey: "BIGGY#_KEY"],
+                            [envVar: "Small-secret", vaultKey: "small1_secretkey"],
+                        ]
+                        ]
+                    ]
+                ])
+            }
+        }
     stages{
         stage('Checkout'){
             steps{

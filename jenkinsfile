@@ -1,0 +1,80 @@
+@Library('jenkins_shared_lib_projeckt_kube-1') _
+
+pipeline{
+    agent any
+    parameters{
+        string(name: 'repoUrl', description: 'Git Repository URL')
+        string(name: 'branchName', description: 'Git Branch Name')
+        string(name: 'region', description:'Name of AWS region')
+        booleanParam(name: 'autoApprove', defaultValue: false, description: 'Apply terraform plan')
+    }
+    environment{
+        AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID')
+        AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
+        
+    }
+    stage('passwords'){
+            steps{
+                withVault([
+                    configuration: [vaultCredentialId: 'vaultsecret-test'],
+                    vaultsecrets;
+                    [
+                        [path: 'skdjfvaoksdnvo/sdfcccee',
+                        secretValues:
+                        [
+                            [envVar: "VAERY_BIG_SECRET", vaultKey: "BIGGY#_KEY"],
+                            [envVar: "Small-secret", vaultKey: "small1_secretkey"],
+                        ]
+                        ]
+                    ]
+                ])
+            }
+        }
+    stages{
+        stage('Checkout'){
+            steps{
+                // This checks out your code from the private Bitbucket repository
+                gitChekout(
+                    branch : "${params.branchName}",
+                    url : "${params.repoUrl}"
+                )
+            }
+        }
+        stage('Initialize'){
+            steps{
+                // This initializes your Terraform workspace
+                terraformInit()
+            }
+        }
+        stage('Validate'){
+            steps{
+                // This validates your Terraform configuration 
+                terraformValidate()
+
+            }
+        }
+        stage('Format'){
+            steps{
+                // This formats your Terraform configuration 
+                terraformFmt()
+            }
+        }
+        stage('Plan'){
+            steps{
+                // This generates a Terraform plan
+                terraformPlan()
+            }
+        }
+        stage('Apply'){
+            steps{
+                terraformApply(params.autoApprove)
+            }
+        }
+        // stage('destroy'){
+        //     steps{
+        //         // This generates a Terraform plan
+        //         terraformDestroy()
+        //     }
+        // }
+    }
+}

@@ -1,0 +1,14 @@
+app:
+  env:
+    - name: dbs
+      value: vault:/skdjfvaoksdnvo/sdfcccee:dbs
+    
+    - name: NEW_USER
+      value: vault:/old/path/path/filename:NEW_USER_RIME
+    
+    - name: APP-NAME
+      value: "aloha"
+    
+    - name: PORT
+      value: 8080
+
